@@ -9,6 +9,7 @@ export default function Header({ onMenu }: { onMenu: () => void }) {
   const settings = useStore((s) => s.settings)
   const setSettings = useStore((s) => s.setSettings)
   const usdtRate = useStore((s) => s.usdtRate)
+  const cnyRate = useStore((s) => s.cnyRate)
   const user = useAuth((s) => s.user)
   const logout = useAuth((s) => s.logout)
   const { refresh, loading } = useUsdtRate()
@@ -35,17 +36,24 @@ export default function Header({ onMenu }: { onMenu: () => void }) {
 
         <div className="flex-1" />
 
-        {/* نرخ تتر */}
+        {/* نرخ تتر و یوان */}
         {settings.showUsdtRate && (
           <div className="hidden items-center gap-2 rounded-2xl bg-emerald-500/10 px-3 py-2 sm:flex">
             <BadgeDollarSign size={18} className="text-emerald-500" />
             <div className="leading-tight">
-              <div className="text-[10px] text-muted">نرخ تتر</div>
+              <div className="text-[10px] text-muted">تتر</div>
               <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400" dir="ltr">
                 {usdtRate ? `${formatNumber(usdtRate.sell)}` : '—'}
-                <span className="mr-1 text-[10px] font-normal text-muted">تومان</span>
               </div>
             </div>
+            {cnyRate && (
+              <div className="border-r border-emerald-500/20 pr-2 leading-tight">
+                <div className="text-[10px] text-muted">یوان</div>
+                <div className="text-sm font-bold text-amber-600 dark:text-amber-400" dir="ltr">
+                  {formatNumber(cnyRate.price)}
+                </div>
+              </div>
+            )}
             <button
               onClick={() => refresh()}
               title="بروزرسانی نرخ"

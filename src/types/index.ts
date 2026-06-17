@@ -297,6 +297,23 @@ export interface UsdtRate {
   source: string
 }
 
+/** نرخ یک منبع مشخص (مقادیر همیشه به تومان) */
+export interface RateSource {
+  key: string
+  name: string
+  buy: number
+  sell: number
+  ok: boolean
+  updatedAt: string
+}
+
+/** نرخ یک ارز (به تومان) */
+export interface CurrencyRate {
+  price: number
+  updatedAt: string
+  source: string
+}
+
 export interface ActivityLog {
   id: ID
   date: string

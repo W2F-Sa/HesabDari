@@ -7,11 +7,13 @@ import type {
   Category,
   Cheque,
   Company,
+  CurrencyRate,
   ExpenseCategory,
   Invoice,
   JournalEntry,
   Party,
   Product,
+  RateSource,
   Settings,
   StockMove,
   Transaction,
@@ -52,6 +54,8 @@ interface State {
   cashAccounts: CashAccount[]
   cheques: Cheque[]
   usdtRate: UsdtRate | null
+  rateSources: RateSource[]
+  cnyRate: CurrencyRate | null
   activityLog: ActivityLog[]
   toasts: Toast[]
 
@@ -59,6 +63,8 @@ interface State {
   setCompany: (c: Partial<Company>) => void
   setSettings: (s: Partial<Settings>) => void
   setUsdtRate: (r: UsdtRate) => void
+  setRateSources: (s: RateSource[]) => void
+  setCnyRate: (r: CurrencyRate) => void
 
   // parties
   addParty: (p: Omit<Party, 'id' | 'createdAt'>) => Party
@@ -138,6 +144,8 @@ const initialState = () => ({
   cashAccounts: defaultCashAccounts(),
   cheques: [] as Cheque[],
   usdtRate: null as UsdtRate | null,
+  rateSources: [] as RateSource[],
+  cnyRate: null as CurrencyRate | null,
   activityLog: [] as ActivityLog[],
 })
 
@@ -150,6 +158,8 @@ export const useStore = create<State>()(
       setCompany: (c) => set((s) => ({ company: { ...s.company, ...c } })),
       setSettings: (s2) => set((s) => ({ settings: { ...s.settings, ...s2 } })),
       setUsdtRate: (r) => set({ usdtRate: r }),
+      setRateSources: (s) => set({ rateSources: s }),
+      setCnyRate: (r) => set({ cnyRate: r }),
 
       addParty: (p) => {
         const party: Party = { ...p, id: uid('pty_'), createdAt: new Date().toISOString() }
